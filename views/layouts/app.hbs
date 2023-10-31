@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    href="https://fonts.googleapis.com/css?family=Lato:300,400,700&amp;display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" 
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"></script> 
+  <title>Virtual Casino</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <a class="navbar-brand text-white text-bolder" href="/">VIRTUAL CASINO</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerVC" aria-controls="navbarTogglerVC" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerVC">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link text-white" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/game-history">Game History</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/transaction-history">Transaction History</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/game-rules">Game Rules</a>
+        </li>
+      </ul>
+      <div class="my-2 my-lg-0">
+        <span class="text-white text-bold">Hello, {{ user.fullName }}</span><br/>
+        <a class="text-white" href="/auth/sign-out">Sign Out <i class="fa fa-sign-out"></i></a>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <p class="text-right">
+          Current Balance: {{ user.accountBalance }} FCFA
+        </p>
+        <p class="text-right">
+          <a href="javascript:void(0);" data-toggle="modal" data-target="#depositModal">Deposit</a>
+          &nbsp;&verbar;&nbsp;
+          <a href="javascript:void(0);" data-toggle="modal" data-target="#withdrawModal">Withdraw</a>
+        </p>
+      </div>
+    </div>
+    {{{body}}}
+  </div>
+
+  <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="depositModalTitle">Deposit Funds</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/users/deposit" class="signin-form" id="depositForm">
+            <div class="form-group mb-3">
+              <label class="text-muted" for="amount">Enter amount (Minimum 100 FCFA)</label>
+              <input
+                name="amount"
+                id="amount"
+                type="number"
+                class="form-control"
+                placeholder="Amount"
+                required
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label class="text-muted" for="phoneNumber">Enter a valid phone number</label>
+              <input
+                name="phoneNumber"
+                id="phoneNumber"
+                type="text"
+                class="form-control"
+                placeholder="Phone Number"
+                required
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="submitForm(document.querySelector('form#depositForm'))">Deposit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="withdrawModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="withdrawModalTitle">Withdraw Funds</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/users/withdraw" class="signin-form" id="withdrawalForm">
+            <div class="form-group mb-3">
+              <label class="text-muted" for="amount">Enter amount (Minimum 100 FCFA)</label>
+              <input
+                name="amount"
+                id="amount"
+                type="number"
+                class="form-control"
+                placeholder="Amount"
+                required
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label class="text-muted" for="phoneNumber">Enter a valid phone number</label>
+              <input
+                name="phoneNumber"
+                id="phoneNumber"
+                type="text"
+                class="form-control"
+                placeholder="Phone Number"
+                required
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="submitForm(document.querySelector('form#withdrawalForm'))">Withdraw</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/popper.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/main.js"></script>
+
+  <script>
+    const submitForm = (depositForm) => {
+      if (depositForm.checkValidity()) {
+        depositForm.submit();
+      }
+    };
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+{{#> body }}
+<div class="row">
+	<div class="col-lg-6 offset-lg-3">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="form-group mb-3">
+          <label for="email">Enter an amount (minimum 5 FCFA)</label>
+          <input type="number" id="gameAmount" class="form-control" placeholder="Amount" value="5" min="5" required />
+        </div>
+      </div>
+      <div class="col-md-8 offset-md-2">
+        <div class="wheel-container">
+          <div id="text" style="margin-top: -33px;"><p>Wheel Of Fortune</p></div>
+          <div class="wheel_box">
+            <canvas id="spinWheel"></canvas>
+            <button id="spin_btn">Start</button>
+            <i class="fa-solid fa-location-arrow"></i>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/body }}
