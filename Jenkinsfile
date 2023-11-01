@@ -7,7 +7,7 @@ pipeline {
         
     stage('Git') {
       steps {
-        git 'https://github.com/Clovisko/ParisX2.git
+        git 'https://github.com/Clovisko/ParisX2.git'
       }
     }
      
